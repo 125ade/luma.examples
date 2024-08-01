@@ -5,7 +5,7 @@
 
 """
 Display detailed system information in graph format.
-It provides a display of CPU, memory, disk utilization, temperature, IP address and system Uptime.
+It provides a display of CPU, memory, disk utilization, temperature, IP address, system Uptime, and Hostname.
 
 Needs psutil (+ dependencies) installed::
 
@@ -83,6 +83,10 @@ def get_ip(network_interface_name):
     return "IP: %s" % (get_ipv4_address(network_interface_name))
 
 
+def get_hostname():
+    return "Hostname: %s" % (socket.gethostname())
+
+
 def format_percent(percent):
     return "%5.1f" % (percent)
 
@@ -103,7 +107,7 @@ def draw_bar_full(draw, line_num):
     draw.text((65, top_left_y - 2), "100 %", font=font_full, fill="black")
 
 
-def stats(device):
+def stats(device, display_mode):
     with canvas(device) as draw:
         temp = get_temp()
         draw_text(draw, 0, 0, "Temp")
@@ -133,10 +137,12 @@ def stats(device):
         else:
             draw_bar_full(draw, 3)
 
-        if datetime.now().second % (toggle_interval_seconds * 2) < toggle_interval_seconds:
+        if display_mode == 0:
             draw_text(draw, 0, 4, get_uptime())
-        else:
+        elif display_mode == 1:
             draw_text(draw, 0, 4, get_ip(network_interface_name))
+        else:
+            draw_text(draw, 0, 4, get_hostname())
 
 
 font_size = 12
@@ -161,6 +167,8 @@ font_default = ImageFont.truetype(str(Path(__file__).resolve().parent.joinpath("
 font_full = ImageFont.truetype(str(Path(__file__).resolve().parent.joinpath("fonts", "DejaVuSansMono.ttf")), font_size_full)
 
 
+display_mode = 0
 while True:
-    stats(device)
-    time.sleep(0.5)
+    stats(device, display_mode)
+    display_mode = (display_mode + 1) % 3  # Cicla tra 0, 1, 2 (uptime, IP, hostname)
+    time.sleep(toggle_interval_seconds)
