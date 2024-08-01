@@ -84,7 +84,7 @@ def get_ip(network_interface_name):
 
 
 def get_hostname():
-    return "Hostname: %s" % (socket.gethostname())
+    return "H: %s" % (socket.gethostname())
 
 
 def format_percent(percent):
