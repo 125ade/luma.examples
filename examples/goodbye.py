@@ -16,8 +16,8 @@ def draw_text(draw, margin_x, line_num, text):
 def stats(device):
     with canvas(device) as draw:
         draw_text(draw, 31, 1, "goodbye")
-        draw_text(draw, 62, 1, "from")
-        draw_text(draw, 31, 1, f"{socket.gethostname()}")
+        draw_text(draw, 62, 2, "from")
+        draw_text(draw, 31, 3, f"{socket.gethostname()}")
 
 font_size = 12
 margin_y_line = [0, 13, 25, 38, 51]
