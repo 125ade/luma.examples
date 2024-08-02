@@ -32,7 +32,9 @@ Log out and in again and clone this repository::
 
 Finally, install the luma libraries using::
 
-  $ sudo -H pip install -e .
+  $ python -m venv .venv
+  $ source source .venv/bin/activate
+  $ pip install -e .
 
 
 Running the examples
