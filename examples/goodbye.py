@@ -18,7 +18,7 @@ def stats(device):
         draw_text(draw, 31, 1, "Goodbye")
         draw_text(draw, 41, 2, "from")
         draw_text(draw, 31, 3, f"{socket.gethostname()}")
-        draw_text(draw, 31, 3, "& 125ade")
+        draw_text(draw, 31, 4, "& 125ade")
 
 font_size = 12
 margin_y_line = [0, 13, 25, 38, 51]
