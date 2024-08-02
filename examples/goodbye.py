@@ -5,23 +5,25 @@
 
 import time
 from pathlib import Path
+import socket
 from demo_opts import get_device
 from luma.core.render import canvas
 from PIL import ImageFont
 
-def display_message(device, message):
+def draw_text(draw, margin_x, line_num, text):
+    draw.text((margin_x, margin_y_line[line_num]), text, font=font_default, fill="white")
+
+def stats(device):
     with canvas(device) as draw:
-        font = ImageFont.truetype(str(Path(__file__).resolve().parent.joinpath("fonts", "DejaVuSansMono.ttf")), 20)
-        width, height = draw.textsize(message, font=font)
-        draw.text(
-            ((device.width - width) // 2, (device.height - height) // 2),
-            message,
-            font=font,
-            fill="white"
-        )
+        draw_text(draw, 31, 1, "goodbye")
+        draw_text(draw, 62, 1, "from")
+        draw_text(draw, 31, 1, f"{socket.gethostname()}")
+
+font_size = 12
+margin_y_line = [0, 13, 25, 38, 51]
 
 device = get_device()
-display_message(device, "goodbye")
+font_default = ImageFont.truetype(str(Path(__file__).resolve().parent.joinpath("fonts", "DejaVuSansMono.ttf")), font_size)
 
-# Keep the message on the screen for 10 seconds
+stats(device)
 time.sleep(10)
